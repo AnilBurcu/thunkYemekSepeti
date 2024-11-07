@@ -1,6 +1,6 @@
-const Container = ({ children, design }) => {
+const Container = ({ children, designs }) => {
   return (
-    <div className={`max-w-[1440px] p-5 mx-auto ${design}`}>{children}</div>
+    <div className={`${designs} max-w-[1440px] mx-auto p-5 `}>{children}</div>
   );
 };
 

@@ -1,55 +1,24 @@
-import axios from "axios";
+// api'dan urun verisini alip store'a aktarmali
+
 import api from "../../utils/api";
+import ActionTypes from "../actionTypes";
 
-//! Aksiyon Olusturan Fonksiyonlar
-// 1- Senkron olanlar
+// Thunk aksiyonu
+export const getProducts = (restId) => (dispatch) => {
+  // Notify the reducer that loading has started
+  dispatch({
+    type: ActionTypes.PRODUCT_LOADING,
+  });
 
-export const setLoading = () => ({
-  type: "SET_LOADING",
-});
-
-export const setProducts = (payload) => ({
-  type: "SET_PRODUCTS",
-  payload,
-});
-
-export const setError = (payload) => ({
-  type: "SET_ERROR",
-  payload,
-});
-
-// 2- Asenkron olanlar
-
-// 3- restoran verilerini alip store'a aktaran asenkron aksiyon
-
-// export const getRestaurants = () => (dispatch) => {
-//   dispatch({
-//     type: "REST_LOADING",
-//   });
-//   api
-//     .get("/restaurants")
-//     .then((res) =>
-//       dispatch({
-//         type: "REST_SUCCESS",
-//         payload: res.data,
-//       })
-//     )
-//     .catch((err) =>
-//       dispatch({
-//         type: "REST_ERROR",
-//         payload: err.message,
-//       })
-//     );
-// };
-
-// restorana gore urun verilerini alip store'a aktaran aksiyon
-export const getProducts = () => {
-  // getData fonk. asenkron bir fonk. return etmeli
-  return async (dispatch) => {
-    dispatch(setLoading());
-    api
-      .get("/products")
-      .then((res) => dispatch(setProducts(res.data)))
-      .catch((err) => dispatch(setError(err.message)));
-  };
+  // Make the API request
+  api
+    .get(`/products?restaurantId=${restId}`)
+    // If the request is successful, send the data to the reducer
+    .then((res) =>
+      dispatch({ type: ActionTypes.PRODUCT_SUCCESS, payload: res.data })
+    )
+    // If the request fails, send the error message to the reducer
+    .catch((err) => {
+      dispatch({ type: ActionTypes.PRODUCT_ERROR, payload: err.message });
+    });
 };

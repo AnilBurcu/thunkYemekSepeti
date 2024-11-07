@@ -7,7 +7,6 @@ const initialState = {
 };
 
 const restaurantReducer = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case ActionTypes.REST_LOADING:
       return { ...state, isLoading: true };

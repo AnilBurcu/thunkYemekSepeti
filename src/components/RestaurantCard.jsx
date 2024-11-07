@@ -1,10 +1,14 @@
 import React from "react";
 import { FaRegClock, FaStar } from "react-icons/fa";
 import { MdDeliveryDining } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const RestaurantCard = ({ data }) => {
   return (
-    <div className="shadow rounded-lg overflow-hidden">
+    <Link
+      to={`/restaurant/${data.id}`}
+      className="shadow rounded-lg overflow-hidden hover:bg-gray-100 cursor-pointer hover:shadow-lg"
+    >
       <img
         className="w-full object-contain "
         src={data.photo}
@@ -38,7 +42,7 @@ const RestaurantCard = ({ data }) => {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
